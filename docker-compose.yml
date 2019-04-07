@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    container_name: waggest_db
+    image: postgres:10.6
+    ports:
+      - "3131:5432"
+    environment:
+      POSTGRES_DB: waggest
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  db-admin:
+    container_name: waggest_dbadmin
+    image: dpage/pgadmin4
+    depends_on:
+      - db
+    ports:
+      - "6432:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dev@waggest.com
+      PGADMIN_DEFAULT_PASSWORD: zblash
+  spring-boot-jpa-app:
+    image: waggestapp-backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    volumes:
+      - /data/spring-boot-app
