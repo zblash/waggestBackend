@@ -19,7 +19,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: dev@waggest.com
       PGADMIN_DEFAULT_PASSWORD: zblash
-  spring-boot-jpa-app:
+  waggestapp:
     image: waggestapp-backend
     build:
       context: ./
